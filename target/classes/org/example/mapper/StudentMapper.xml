@@ -1,0 +1,61 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.StudentMapper">
+    <insert id="add">
+        INSERT INTO student   VALUES(null,#{name},#{no},#{gender},#{phone},
+                                   #{idCard},#{isCollege},#{address},#{degree},#{graduationDate},
+                                   #{clazzId},#{violationCount},#{violationScore},#{createTime},#{updateTime})
+    </insert>
+    <update id="update">
+            UPDATE student
+            <set>
+                <if test="name != null and name != ''">name=#{name},</if>
+                <if test="no != null and no != ''">no=#{no},</if>
+                <if test="gender != null">gender=#{gender},</if>
+                <if test="phone != null and phone != ''">phone=#{phone},</if>
+                <if test="idCard != null and idCard != ''">id_card=#{idCard},</if>
+                <if test="isCollege != null">is_college=#{isCollege},</if>
+                <if test="address != null and address != ''">address=#{address},</if>
+                <if test="degree != null">degree=#{degree},</if>
+                <if test="clazzId != null">clazz_id=#{clazzId},</if>
+                <if test="violationCount != null">violation_count=#{violationCount},</if>
+                <if test="violationScore != null">violation_score=#{violationScore},</if>
+                <if test="updateTime != null">update_time=#{updateTime}</if>
+            </set>
+            WHERE id = #{id}
+    </update>
+    <update id="vioHandle">
+        update student set violation_count = violation_count + 1,violation_score = violation_score + #{score} where id = #{id};
+    </update>
+    <delete id="delete">
+        delete from student where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="page" resultType="org.example.pojo.Student">
+        select s.*,c.name clazz_name from student s left join clazz c on c.id = s.clazz_id
+        <where>
+            <if test="name != null and name != ''">s.name = #{name}</if>
+            <if test="degree != null "> and  s.degree = #{degree}</if>
+            <if test="clazzId != null"> and  s.clazz_id = #{clazzId}</if>
+        </where>
+    </select>
+    <select id="findById" resultType="org.example.pojo.Student">
+        select *  from student where id = #{id}
+    </select>
+    <select id="countStudentDegreeData" resultType="java.util.Map">
+        select (case when degree =1 then '初中'
+                    when degree=2 then '高中'
+                    when degree=3 then  '大专'
+                    when degree=4 then '本科'
+                    when degree=5 then '硕士'
+                    when degree=6 then '博士'
+                    else '其他' end) name,
+            count(*) value from student group by degree order by value
+    </select>
+    <select id="countStudentCountData" resultType="java.util.Map">
+        select c.name clazz,count(*) data from clazz c left join student s on c.id = s.clazz_id group by c.id order by data
+    </select>
+</mapper>
