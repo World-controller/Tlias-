@@ -30,3 +30,6 @@ aliyun:
     endpoint: https://oss-cn-beijing.aliyuncs.com
     bucketName: java-ai-clw
     region: cn-beijing
+
+server:
+  port: 8081
