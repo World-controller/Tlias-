@@ -27,3 +27,12 @@ public class LoginController {
         return Result.error("用户名或者密码不正确！");
     }
 }
+/*利用Session实现登录验证，将登录信息存入Session，然后在其他页面通过Session获取登录信息进行验证
+        LoginInfo loginInfo = userSerivce.login(emp);
+        if (loginInfo != null){
+            session.setAttribute("loginInfo",loginInfo);
+            return "redirect:/index.jsp";//登录成功，重定向到首页
+        }
+        request.setAttribute("msg","用户名或者密码不正确！");
+        return "redirect:/login.jsp";    //登录失败，重定向到登录页面
+* */

@@ -12,6 +12,11 @@ import org.example.utils.JwtUtils;
 
 import java.io.IOException;
 
+/*自定义过滤器，用于验证token，步骤：
+* 1.创建过滤器类，实现Filter接口
+* 2.配置过滤器
+* 3.重写doFilter方法，用于处理请求
+* */
 @Slf4j
 @WebFilter("/*")
 public class TokenFilter implements Filter {
