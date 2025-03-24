@@ -8,7 +8,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+/*异常处理器配置xml文件（Spring）   下面的value属性配置了异常类型和对应的错误页面的映射关系
+<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    <property name="exceptionMappings">
+        <map>
+            <entry key="org.springframework.dao.DuplicateKeyException" value="/error/duplicateKeyException"/>
+            <entry key="java.lang.MyException" value="/error/exception"/>
+        </map>
+     </property>
+</bean>
 
+// 异常处理器配置类（Spring Boot）
+* */
 
 /*
 *  全局异常处理器
